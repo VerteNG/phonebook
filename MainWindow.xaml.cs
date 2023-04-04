@@ -12,10 +12,10 @@ namespace Projekt_Lukasz_Motak
     /// </summary>
     public partial class MainWindow : Window, DataChangeListener
     {
-        private DatabaseUtils databaseUtils;
-        private List<Contact> contacts;
-        private List<DateTime> thisWeek;
-        private List<Contact> checkedContacts;
+        public DatabaseUtils databaseUtils;
+        public List<Contact> contacts;
+        public List<DateTime> thisWeek;
+        public List<Contact> checkedContacts;
 
         public MainWindow()
         {
@@ -35,7 +35,7 @@ namespace Projekt_Lukasz_Motak
             collectionView.Filter = ContactsFilter;
         }
 
-        private bool ContactsFilter(object item)
+        public bool ContactsFilter(object item)
         {
             if (string.IsNullOrEmpty(searchBox.Text))
                 return true;
@@ -47,7 +47,7 @@ namespace Projekt_Lukasz_Motak
                     ((item as Contact).Birthday.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
-        private void CountDate(List<Contact> contacts)
+        public void CountDate(List<Contact> contacts)
         {
             List<Contact> birthdayContacts = new List<Contact>();
             foreach (Contact contact in contacts)
@@ -68,7 +68,7 @@ namespace Projekt_Lukasz_Motak
             BirthdaysDataBinding.ItemsSource = birthdayContacts;
         }
 
-        private void countThisWeek()
+        public void countThisWeek()
         {
             thisWeek = new List<DateTime>();
             for (int i = 0; i <= 6; i++)
@@ -80,19 +80,19 @@ namespace Projekt_Lukasz_Motak
             }
         }
 
-        private int convertDaysCode(int code)
+        public int convertDaysCode(int code)
         {
             if (code == 0) return 6;
             else return code - 1;
         }
 
-        private void AddContactButton_Click(object sender, RoutedEventArgs e)
+        public void AddContactButton_Click(object sender, RoutedEventArgs e)
         {
             AddContactWindow addContactWindow = new AddContactWindow(this);
             addContactWindow.Show();
         }
 
-        private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        public void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ListViewItem item = sender as ListViewItem;
             if (item != null && item.IsSelected)
@@ -102,12 +102,12 @@ namespace Projekt_Lukasz_Motak
             }
         }
 
-        private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
+        public void searchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(ListViewDataBinding.ItemsSource).Refresh();
         }
 
-        private void HandleCheck(object sender, RoutedEventArgs e)
+        public void HandleCheck(object sender, RoutedEventArgs e)
         {
             if (ListViewDataBinding.SelectedItems.Count >= 1)
             {
@@ -115,7 +115,7 @@ namespace Projekt_Lukasz_Motak
             }
         }
 
-        private void HandleUnchecked(object sender, RoutedEventArgs e)
+        public void HandleUnchecked(object sender, RoutedEventArgs e)
         {
             if (ListViewDataBinding.SelectedItems.Count < 1)
             {
@@ -123,7 +123,7 @@ namespace Projekt_Lukasz_Motak
             }
         }
 
-        private void DeleteCheckedButton_Click(object sender, RoutedEventArgs e)
+        public void DeleteCheckedButton_Click(object sender, RoutedEventArgs e)
         {
             var items = ListViewDataBinding.SelectedItems;
             if (items.Count > 0)
@@ -152,28 +152,5 @@ namespace Projekt_Lukasz_Motak
                 }
             }
         }
-    }
-
-    public class Contact
-    {
-        public Contact()
-        {
-
-        }
-        public Contact(Contact contact)
-        {
-            this.Id          = contact.Id;
-            this.FirstName   = contact.FirstName;
-            this.LastName    = contact.LastName;
-            this.PhoneNumber = contact.PhoneNumber;
-            this.Email       = contact.Email;
-            this.Birthday    = contact.Birthday;
-        }
-        public int Id             { get; set; }
-        public string FirstName   { get; set; }
-        public string LastName    { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email       { get; set; }
-        public string Birthday    { get; set; }
     }
 }
