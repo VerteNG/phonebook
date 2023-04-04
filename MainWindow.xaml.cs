@@ -41,7 +41,10 @@ namespace Projekt_Lukasz_Motak
                 return true;
             else
                 return ((item as Contact).FirstName.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    ((item as Contact).LastName.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                    ((item as Contact).LastName.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    ((item as Contact).Email.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    ((item as Contact).PhoneNumber.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    ((item as Contact).Birthday.IndexOf(searchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private void CountDate(List<Contact> contacts)
